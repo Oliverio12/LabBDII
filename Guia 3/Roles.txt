@@ -1,0 +1,76 @@
+Nota: Proyecto de Desarrollo de Software
+
+Roles:
+Rol: Sysadmin
+Todo -> Control
+
+Rol: Gerente
+Opciones:
+-Agregar Productos, Stocks, Inventario, Marcas, Categorias, Proveedores, Cantida de productos, Descuentos,Unidad de precio: Insert
+-Eliminar  Productos, Stocks, Inventario, Marcas, Categorias, Proveedores, Cantida de productos, Descuentos,Unidad de precio: Delete
+-Editar  Productos, Stocks, Inventario, Marcas, Categorias, Proveedores, Cantida de productos, Descuentos,Unidad de precio: Alter
+-Consultar  Productos, Stocks, Inventario, Marcas, Categorias, Proveedores, Cantida de productos, Descuentos,Unidad de precio: Select
+-Modificar  Productos, Stocks, Inventario, Marcas, Categorias, Proveedores, Cantida de productos, Descuentos,Unidad de precio: Update
+
+grant Select, Delete, Update, Insert, Alter on Productos.Producto to Gerente
+grant Select, Delete, Update, Insert, Alter on Productos.Marca to Gerente
+grant Select, Delete, Update, Insert, Alter on Productos.cantidadPrecio to Gerente
+grant Select, Delete, Update, Insert, Alter on Productos.cantidadStock to Gerente
+grant Select, Delete, Update, Insert, Alter on Productos.categoria to Gerente
+grant Select, Delete, Update, Insert, Alter on Productos.descuento to Gerente
+grant Select, Delete, Update, Insert, Alter on Sales.inventario to Gerente
+grant Select, Delete, Update, Insert, Alter on Person.proveedor to Gerente
+
+
+Rol: Empleado
+Opciones:
+-Agregar Productos, Descuentos: Insert
+-Editar Productos, Descuentos: Alter
+-Consultar Productos: Select
+-Eliminar Descuentos: Delete
+
+grant Insert Alter on Productos.Producto to Empleado
+grant Insert Alter on Productos.descuento to Empleado
+
+grant Select on Productos.Producto to Empleado
+grant Delete on Productos.descuento to empleado
+
+
+
+Rol: Bodegero
+Opciones:
+-Agregar Productos, Cantidad de Productos, Stocks e Invenvario: Insert
+-Consultar Productos, cantidades de Productos, Stocks, Invetario: Select
+-Eliminar Productos, Cantida de Productos, Stocks e Inventario: Delete
+-Modificar Productos, Cantida de Productos, Stocks e Inventario: Update
+
+grant Insert Select Delete Update on Productos.Producto to Bodegero
+
+grant Insert Select Delete Update on Productos.cantidadPrecio to Bodegero
+
+grant Insert Select Delete Update on Productos.cantidadStock to Bodegero
+
+grant Insert Select Delete Update on Sales.inventario to Bodegero
+
+
+
+Rol: Manager
+Opcion:
+-Agregar Proveedor: Insert
+-Consultar Proveedor: Select
+
+grant Insert on Person.proveedor to Manager
+grant Select on Person.Proveedor to Manager
+
+
+
+
+
+
+
+
+
+
+
+
+ 
