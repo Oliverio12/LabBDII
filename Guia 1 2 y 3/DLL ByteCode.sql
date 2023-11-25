@@ -112,9 +112,15 @@ create table Cliente.Clientes( --listos
     Id_Direccion int not null,
 	Usuario varchar(50) not null,
     Clave varchar(100) not null,
-    FechaRegistro datetime not null
 );
 
+create table Cliente.RegistroClientes (
+    Id_Registro int primary key identity(1, 1),
+    Id_Cliente int,
+    FechaRegistro datetime
+);
+
+select * from Cliente.RegistroClientes
 
 
 
@@ -126,8 +132,8 @@ create table Productos.Inventario ( --Listo
     Nombre_producto nvarchar(255) not null,
     Descripcion nvarchar(255),
     Precio decimal(10,2) not null,
-    Fecha_adquisicion datetime,
-    Fecha_ultima_actualizacion datetime,
+    Fecha_adquisicion date,
+    Fecha_ultima_actualizacion date,
     Categoria nvarchar(50),
     Proveedor nvarchar(255)
 );
@@ -157,8 +163,8 @@ create table Productos.Descuento( --Listo
     Id_Descuento int primary key identity(1, 1),
     Id_Producto int not null,
     PorcentajeDescuento decimal(5, 2) not null,
-    FechaInicio datetime not null,
-    FechaFinal datetime not null
+    FechaInicio date null,
+    FechaFinal date not null
 );
 
 
@@ -168,7 +174,7 @@ create table Ventas.Compra ( --Listo
     Id_Compra int identity(1, 1) primary key,
     Proveedor varchar(100) not null,
 	NombreCompra varchar(255) not null,
-    Fecha_Compra datetime not null,
+    Fecha_Compra date not null,
     Total decimal(10, 2) not null,
     Estado varchar(50) not null,
     Id_Empleado int not null,
@@ -193,15 +199,16 @@ create table Ventas.Pagos( --Listo
     Id_Pago int primary key identity(1, 1),
     Id_MetodoPago int not null,
     Monto decimal(10, 2) not null,
-    FechaPago datetime not null
+    FechaPago date null
 );
+
 
 create table Ventas.Venta(
     Id_Venta int primary key identity(1, 1),
     Id_Cliente int not null,
     Id_Usuario int not null,
 	Id_Pago int not null,
-    FechaVenta datetime not null
+    FechaVenta date not null
 );
 
 --Carrito
@@ -210,7 +217,7 @@ create table Cliente.CarritoCompras(
     Id_Producto int not null,
 	Id_Venta int not null,
     Cantidad int not null,
-    FechaAgregado datetime not null
+    FechaAgregado date not null
 );
 
 create table Ventas.DetalleVenta (
@@ -263,3 +270,22 @@ alter table Ventas.DetalleVenta add foreign key (Id_Producto) references Product
 alter table Cliente.CarritoCompras add foreign key (Id_Producto) references Productos.Producto(Id_Producto);
 alter table Cliente.CarritoCompras add foreign key (Id_Venta) references Ventas.Venta(Id_Venta);
 alter table Ventas.Compra add foreign key (Id_Empleado) references Persona.Empleados(Id_Empleado);
+
+/*
+CREATE TRIGGER trg_Cliente_Clientes_Insertar
+ON Cliente.Clientes
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @Id_Cliente int;
+
+    SELECT @Id_Cliente = Id_Cliente
+    FROM inserted;
+
+    INSERT INTO Cliente.RegistroClientes (Id_Cliente, FechaRegistro)
+    VALUES (@Id_Cliente, GETDATE());
+END;
+
+*/

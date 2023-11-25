@@ -526,16 +526,16 @@ go
 
 --insertando clientes
 insert into Cliente.Clientes values
-	('Carlos', 'Martinez', '12345678-9', '7231-2201', 'carlos.martinez@dominio.com', 11, 'carlosm', 'Carlos1234', GETDATE()),
-	('Maria', 'Gonzalez', '23456789-0', '7382-0302', 'maria.gonzalez@dominio.com', 12, 'mariag', 'Maria5678', GETDATE()),
-	('Juan', 'Rodriguez', '34567890-1', '7976-0453', 'juan.rodriguez@dominio.com', 13, 'juanr', 'Juan91011', GETDATE()),
-	('Ana', 'Lopez', '45678901-2', '7321-0554', 'ana.lopez@dominio.com', 14, 'anal', 'Ana1213', GETDATE()),
-	('Pedro', 'Perez', '56789012-3', '7442-1205', 'pedro.perez@dominio.com', 15, 'pedrop', 'Pedro1415', GETDATE()),
-	('Laura', 'Sanchez', '67890123-4', '7012-5206', 'laura.sanchez@dominio.com', 16, 'lauras', 'Laura1617', GETDATE()),
-	('Jose', 'Garcia', '78901234-5', '7020-7857', 'jose.garcia@dominio.com', 17, 'joseg', 'Jose1819', GETDATE()),
-	('Sara', 'Diaz', '89012345-6', '7330-8888', 'sara.diaz@dominio.com', 18, 'sarad', 'Sara2021', GETDATE()),
-	('Luis', 'Fernandez', '90123456-7', '7021-0409', 'luis.fernandez@dominio.com', 19, 'luisf', 'Luis2223', GETDATE()),
-	('Marta', 'Ruiz', '01234567-8', '7052-0010', 'marta.ruiz@dominio.com', 20, 'martar', 'Marta2425', GETDATE());	
+	('Carlos', 'Martinez', '12345678-9', '7231-2201', 'carlos.martinez@dominio.com', 11, 'carlosm', 'Carlos1234'),
+	('Maria', 'Gonzalez', '23456789-0', '7382-0302', 'maria.gonzalez@dominio.com', 12, 'mariag', 'Maria5678'),
+	('Juan', 'Rodriguez', '34567890-1', '7976-0453', 'juan.rodriguez@dominio.com', 13, 'juanr', 'Juan91011'),
+	('Ana', 'Lopez', '45678901-2', '7321-0554', 'ana.lopez@dominio.com', 14, 'anal', 'Ana1213'),
+	('Pedro', 'Perez', '56789012-3', '7442-1205', 'pedro.perez@dominio.com', 15, 'pedrop', 'Pedro1415'),
+	('Laura', 'Sanchez', '67890123-4', '7012-5206', 'laura.sanchez@dominio.com', 16, 'lauras', 'Laura1617'),
+	('Jose', 'Garcia', '78901234-5', '7020-7857', 'jose.garcia@dominio.com', 17, 'joseg', 'Jose1819'),
+	('Sara', 'Diaz', '89012345-6', '7330-8888', 'sara.diaz@dominio.com', 18, 'sarad', 'Sara2021'),
+	('Luis', 'Fernandez', '90123456-7', '7021-0409', 'luis.fernandez@dominio.com', 19, 'luisf', 'Luis2223'),
+	('Marta', 'Ruiz', '01234567-8', '7052-0010', 'marta.ruiz@dominio.com', 20, 'martar', 'Marta2425');	
 go
 
 
