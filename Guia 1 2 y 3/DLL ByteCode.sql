@@ -121,6 +121,14 @@ create table Cliente.RegistroClientes (
 );
 
 select * from Cliente.RegistroClientes
+SELECT
+    C.*,
+    R.Id_Registro,
+    R.FechaRegistro
+FROM
+    Cliente.Clientes C
+LEFT JOIN
+    Cliente.RegistroClientes R ON C.Id_Cliente = R.Id_Cliente;
 
 
 
