@@ -228,14 +228,87 @@ FROM
     INNER JOIN Cliente.Clientes c ON v.Id_Cliente = c.Id_Cliente
     INNER JOIN Rol.Usuarios u ON v.Id_Usuario = u.Id_Usuario
     INNER JOIN VistaPagos vp ON v.Id_Pago = vp.Id_Pago;
+go
 
-	select * from VistaVentas
-	drop view VistaVentas
+CREATE VIEW VistaMarcasCategoria AS
+SELECT
+	p.Id_Producto,
+   CONCAT(
+    M.NombreMarca,', ',
+    C.NombreCategoria) as Marcas
+FROM
+    Productos.Producto P
+    JOIN Productos.Marca M ON P.Id_Marca = M.Id_Marca
+    JOIN Productos.Categoria C ON P.Id_Categoria = C.Id_Categoria;
 
-	select * from Cliente.Clientes
+CREATE VIEW VistaCarrito AS
+SELECT
+    c.Id_Carrito,
+    c.Id_Producto,
+    CONCAT(
+        'PRODUCTO: ',p.NombreProducto, ',  ',
+        'MARCAS: ',vmc.Marcas, ',  ',
+		'PRECIO: ', p.Precio
+    ) as Venta,
+	c.Cantidad,
+	c.FechaAgregado
+FROM
+    Cliente.CarritoCompras c
+    INNER JOIN Productos.Producto p ON c.Id_Producto = p.Id_Producto
+    INNER JOIN Ventas.Venta v ON c.Id_Venta = v.Id_Venta
+    INNER JOIN VistaMarcasCategoria vmc ON p.Id_Producto = vmc.Id_Producto;
+go
+
+CREATE VIEW VistaVentasCarrito
+AS
+SELECT
+	v.Id_Venta,
+	concat(
+    'CLIENTE: ',c.NombresCliente,',  ',
+    'MONTO: ',vp.Monto,', ',
+    'FECHA PAGO: ',vp.FechaPago
+	) as Pago
+	
+	
+FROM
+    Ventas.Venta v
+    INNER JOIN Cliente.Clientes c ON v.Id_Cliente = c.Id_Cliente
+    INNER JOIN VistaPagos vp ON v.Id_Pago = vp.Id_Pago;
+go
 
 
+
+CREATE VIEW VistaCarrito AS
+SELECT
+    c.Id_Carrito,
+    c.Id_Producto,
+    CONCAT(
+        'PRODUCTO: ',p.NombreProducto, ',  ',
+        'MARCAS: ',vmc.Marcas, ',  ',
+		'PRECIO: ', p.Precio
+    ) as Producto,
+	c.Id_Venta,
+	CONCAT(
+		vvc.Id_Venta,',  ',
+		vvc.Pago
+	)as Venta,
+	c.Cantidad,
+	c.FechaAgregado
+FROM
+    Cliente.CarritoCompras c
+    INNER JOIN Productos.Producto p ON c.Id_Producto = p.Id_Producto
+    INNER JOIN Ventas.Venta v ON c.Id_Venta = v.Id_Venta
+    INNER JOIN VistaMarcasCategoria vmc ON p.Id_Producto = vmc.Id_Producto
+	INNER JOIN VistaVentasCarrito vvc ON v.Id_Venta = vvc.Id_Venta;
+go
+
+select * from VistaCarrito
+select * from VistaVentasCarrito 
+select * from VistaMarcasCategoria
+select * from VistaVentas
+select * from Cliente.Clientes
 select * from VistaProductoConDescuento
 select * from VistaProductoCompleta
 select * from Productos.Categoria
 select * from Productos.Producto
+select * from VistaCarrito
