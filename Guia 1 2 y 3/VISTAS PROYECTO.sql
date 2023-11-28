@@ -147,6 +147,95 @@ FROM
     INNER JOIN Productos.Categoria C ON P.Id_Categoria = C.Id_Categoria;
 go
 
+CREATE VIEW VistaProductoConDescuento
+AS
+SELECT
+	D.Id_Descuento,
+    D.Id_Producto,
+	CONCAT( 
+    P.NombreProducto,', ',
+    P.Precio,', ',
+    M.NombreMarca,', ',
+    C.NombreCategoria) AS Producto,
+    D.PorcentajeDescuento,
+    D.FechaInicio,
+    D.FechaFinal
+FROM
+    Productos.Producto P
+    INNER JOIN Productos.Marca M ON P.Id_Marca = M.Id_Marca
+    INNER JOIN Productos.Categoria C ON P.Id_Categoria = C.Id_Categoria
+    LEFT JOIN Productos.Descuento D ON P.Id_Producto = D.Id_Producto;
+GO
+
+-- Crear una vista que incluya el nombre y apellido del empleado en las compras
+CREATE VIEW VistaCompraConEmpleado
+AS
+SELECT
+    C.Id_Compra,
+    C.Proveedor,
+    C.NombreCompra,
+    C.Fecha_Compra,
+    C.Total,
+    C.Estado,
+	C.Id_Empleado,
+	CONCAT(
+    E.NombresEmpleado,', ', E.ApellidosEmpleado) as Empleado,
+    C.DescripcionCompra
+FROM
+    Ventas.Compra C
+    INNER JOIN Persona.Empleados E ON C.Id_Empleado = E.Id_Empleado;
+GO
+
+select * from VistaCompraConEmpleado
 
 
+-- Crear la vista corregida
+CREATE VIEW VistaPagos
+AS
+SELECT 
+    P.Id_Pago,
+    P.Id_MetodoPago,
+    CONCAT(
+        'Id Metodo: ', M.Id_MetodoPago, ', ',
+        'Tipo de Pago: ', M.Metodo
+    ) as MetodoPago,
+    P.Monto,
+    P.FechaPago
+FROM
+    Ventas.Pagos P
+INNER JOIN Ventas.MetodosPago M ON P.Id_MetodoPago = M.Id_MetodoPago;
+GO
+
+select * from VistaPagos
+
+
+CREATE VIEW VistaVentas
+AS
+SELECT
+	v.Id_Venta,
+	v.Id_Cliente,
+    c.NombresCliente AS Cliente,
+	v.Id_Usuario,
+    u.Usuario AS UsuarioEmpleado,
+	v.Id_Pago,
+	CONCAT(
+    vp.MetodoPago, ', ',
+    'Monto: ',vp.Monto,', ',
+    'Fecha: ',vp.FechaPago) as Pago,
+	v.FechaVenta
+FROM
+    Ventas.Venta v
+    INNER JOIN Cliente.Clientes c ON v.Id_Cliente = c.Id_Cliente
+    INNER JOIN Rol.Usuarios u ON v.Id_Usuario = u.Id_Usuario
+    INNER JOIN VistaPagos vp ON v.Id_Pago = vp.Id_Pago;
+
+	select * from VistaVentas
+	drop view VistaVentas
+
+	select * from Cliente.Clientes
+
+
+select * from VistaProductoConDescuento
 select * from VistaProductoCompleta
+select * from Productos.Categoria
+select * from Productos.Producto
