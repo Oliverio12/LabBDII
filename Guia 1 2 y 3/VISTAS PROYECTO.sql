@@ -134,11 +134,11 @@ SELECT
     I.Proveedor) as Inventario,
 	P.Id_Marca,
 	CONCAT(
-	M.Id_Marca, ', ',
+	'Marca: ',
     M.NombreMarca) as Marca,
 	P.Id_Categoria,
 	CONCAT(
-	C.Id_Categoria, ', ',
+	'Categoria: ',
     C.NombreCategoria) as Categoria
 FROM
     Productos.Producto P
@@ -146,6 +146,7 @@ FROM
     INNER JOIN Productos.Marca M ON P.Id_Marca = M.Id_Marca
     INNER JOIN Productos.Categoria C ON P.Id_Categoria = C.Id_Categoria;
 go
+
 
 CREATE VIEW VistaProductoConDescuento
 AS
@@ -196,7 +197,6 @@ SELECT
     P.Id_Pago,
     P.Id_MetodoPago,
     CONCAT(
-        'Id Metodo: ', M.Id_MetodoPago, ', ',
         'Tipo de Pago: ', M.Metodo
     ) as MetodoPago,
     P.Monto,
@@ -207,7 +207,6 @@ INNER JOIN Ventas.MetodosPago M ON P.Id_MetodoPago = M.Id_MetodoPago;
 GO
 
 select * from VistaPagos
-
 
 CREATE VIEW VistaVentas
 AS
@@ -302,6 +301,65 @@ FROM
 	INNER JOIN VistaVentasCarrito vvc ON v.Id_Venta = vvc.Id_Venta;
 go
 
+
+CREATE VIEW VistaDetalleVenta
+as
+select 
+	DV.Id_DetalleVenta,
+	DV.Id_Venta,
+	CONCAT('Cliente: ',VV.Cliente,',  ','Usuario Empleado: ',VV.UsuarioEmpleado,',  ',VV.Pago) as Venta,
+	DV.Id_Carrito,
+	CONCAT('Cantidad: ',VC.Cantidad,',  ','Agregado el: ',VC.FechaAgregado,',  ') as Carrito,
+	DV.Id_Producto,
+	CONCAT('PRODUCTO: ',PC.NombreProducto,',  ','Precio: ',PC.Precio,',  ',PC.Marca,',  ',PC.Categoria) as Producto,
+	DV.Cantidad,
+	DV.PrecioUnitario,
+	DV.Total
+from
+	Ventas.DetalleVenta DV
+	INNER JOIN VistaVentas VV on DV.Id_Venta = VV.Id_Venta
+	INNER JOIN VistaCarrito VC on DV.Id_Carrito = VC.Id_Carrito
+	INNER JOIN VistaProductoCompleta PC on DV.Id_Producto = PC.Id_Producto
+go
+Create View VistaDetalleCompra
+as
+select 
+	DC.Id_DetalleCompra,
+	DC.Id_Compra,
+	CONCAT('Proveedor: ',VCE.NombreCompra, ',  ','Fecha Compra: ',VCE.Fecha_Compra, ',  ','Empleado: ',VCE.Empleado) as Compra,
+	DC.Cantidad,
+	DC.PrecioUnitario,
+	DC.EstadoCompra,
+	DC.Total
+	from 
+	Ventas.DetalleCompra DC
+	INNER JOIN VistaCompraConEmpleado VCE on DC.Id_Compra = VCE.Id_Compra
+go
+Select * from VistaDetalleVenta
+
+select * from VistaEmpleadoDireccion
+
+create view VistaGrupos
+as
+select 
+	G.Id_Grupo,
+	G.Id_Empleado,
+	CONCAT('Empleado: ',E.NombresEmpleado+ ' ' + E.ApellidosEmpleado, ',  ','Cargo: ', E.CargoEmpleado ,',  ','Telefono: ',E.Telefono) as Empleado,
+	G.Turno
+
+from
+	Grupos.Grupo G
+	INNER JOIN VistaEmpleadoDireccion E on G.Id_Empleado = E.Id_Empleado
+go
+
+select * from VistaGrupos
+
+
+
+
+
+
+select * from VistaDetalleVenta
 select * from VistaCarrito
 select * from VistaVentasCarrito 
 select * from VistaMarcasCategoria
